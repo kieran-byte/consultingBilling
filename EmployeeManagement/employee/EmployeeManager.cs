@@ -18,8 +18,9 @@ namespace EmployeeManagement.employee
             {
                 connection.Open();
 
+
                 //create employee table
-                string createTableQuery = "CREATE TABLE IF NOT EXISTS Employees (EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Department TEXT)";
+                string createTableQuery = "CREATE TABLE IF NOT EXISTS Employees (EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Department TEXT, Hourly INT)";
                 SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
                 command.ExecuteNonQuery();
 
@@ -28,16 +29,17 @@ namespace EmployeeManagement.employee
             Console.WriteLine("Database created");
         }
 
-        public void InsertHelper(string name, string department)
+        public void InsertHelper(string name, string department, int hourly)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
 
-                string insertQuery = "INSERT INTO Employees (Name, Department) VALUES (@Name, @Department)";
+                string insertQuery = "INSERT INTO Employees (Name, Department, Hourly) VALUES (@Name, @Department, @Hourly)";
                 SQLiteCommand command = new SQLiteCommand(insertQuery, connection);
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@Department", department);
+                command.Parameters.AddWithValue("@Hourly", hourly);
                 command.ExecuteNonQuery();
             }
 
@@ -53,20 +55,22 @@ namespace EmployeeManagement.employee
             string name = Console.ReadLine();
             Console.Write("Enter Employee Department: ");
             string department = Console.ReadLine();
+            Console.WriteLine("Enter employee wage");
+            int hourly = int.Parse(Console.ReadLine());
 
 
-            if (name == null || department == null)
+            if (name == null || department == null || hourly < 0)
             {
                 Console.WriteLine("One or more values not specified, please try again");
                 return;
             }
 
-            InsertHelper(name, department);
+            InsertHelper(name, department, hourly);
         }
 
-        public void AddEmployee(string name, string department)
+        public void AddEmployee(string name, string department, int hourly)
         {
-            InsertHelper(name, department);
+            InsertHelper(name, department, hourly);
         }
 
         public void ViewEmployees()

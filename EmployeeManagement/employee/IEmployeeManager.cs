@@ -1,13 +1,17 @@
-﻿public interface IEmployeeDataAccess
+﻿namespace EmployeeManagement.employee
 {
-    void InitializeDatabase();
-    void InsertHelper(string name, string department);
-    void AddEmployee();
-    void AddEmployee(string name, string department);
-    void ViewEmployees();
-    void UpdateEmployee(int empId);
-    void RemoveEmployee(int employeeId);
-    void DropTable();
 
-   
+    public interface IEmployeeDataAccess
+    {
+        void InitializeDatabase();
+        void InsertHelper(string name, string department, int hourly);
+        void AddEmployee();
+        void AddEmployee(string name, string department, int hourly);
+        void ViewEmployees();
+        void UpdateEmployee(int empId);
+        void RemoveEmployee(int employeeId);
+        void DropTable();
+
+
+    }
 }
