@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
 
-namespace EmployeeManagement
+namespace EmployeeManagement.employee
 {
     public class EmployeeDataAccess : IEmployeeDataAccess
     {
@@ -19,7 +19,7 @@ namespace EmployeeManagement
                 connection.Open();
 
                 //create employee table
-                string createTableQuery = "CREATE TABLE IF NOT EXISTS Employees (EmployeeId INTEGER PRIMARY KEY, Name TEXT, Department TEXT)";
+                string createTableQuery = "CREATE TABLE IF NOT EXISTS Employees (EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Department TEXT)";
                 SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
                 command.ExecuteNonQuery();
 
@@ -36,7 +36,6 @@ namespace EmployeeManagement
 
                 string insertQuery = "INSERT INTO Employees (Name, Department) VALUES (@Name, @Department)";
                 SQLiteCommand command = new SQLiteCommand(insertQuery, connection);
-                //command.Parameters.AddWithValue("@EmployeeId", employee.EmployeeId);
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@Department", department);
                 command.ExecuteNonQuery();
@@ -92,7 +91,7 @@ namespace EmployeeManagement
             }
         }
 
-        
+
         //given an employee id, retrieve and update whichever values the user wants
         public void UpdateEmployee(int empId)
         {
