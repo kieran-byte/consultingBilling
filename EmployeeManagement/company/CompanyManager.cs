@@ -96,7 +96,7 @@ namespace EmployeeManagement.company
                 command.ExecuteNonQuery();
             }
 
-            Console.WriteLine("Employee added successfully!");
+            Console.WriteLine("Company added successfully!");
         }
 
         public void RemoveCompany(int companyId)
