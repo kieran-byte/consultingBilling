@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using EmployeeManagement.employee;
+using EmployeeManagement.company;
 
 namespace EmployeeManagement
 {
@@ -12,26 +14,29 @@ namespace EmployeeManagement
         static string connectionString = "Data Source=employee.db;";
 
         private readonly IEmployeeDataAccess _employeeAccess;
+        private readonly ICompanyManager _companyManager;
 
         //expand to hold other access inclu company and junction table
-        public Program(IEmployeeDataAccess employeeAccess)
+        public Program(IEmployeeDataAccess employeeAccess, ICompanyManager companyAccess)
         {
             this._employeeAccess = employeeAccess;
+            this._companyManager = companyAccess;
         }
 
         
-
-
-
         static void Main(string[] args)
             {
                 bool continueExecution = true;
 
             IEmployeeDataAccess employeeDataAccess = new EmployeeDataAccess(connectionString);
-            Program program = new Program(employeeDataAccess);
+            ICompanyManager companyAccess = new CompanyManager(connectionString);
+
+            Program program = new Program(employeeDataAccess, companyAccess);
 
             program._employeeAccess.DropTable();
+            program._companyManager.DropCompanyTable();
 
+            program._companyManager.InitializeDatabase();
             program._employeeAccess.InitializeDatabase();
 
             InitialDataset(program);
@@ -90,6 +95,11 @@ namespace EmployeeManagement
             program._employeeAccess.AddEmployee("Emily Brown", "Marketing Department");
             program._employeeAccess.AddEmployee("Robert Williams", "Operations Department");
             program._employeeAccess.AddEmployee("Sophia Miller", "Sales Department");
+
+            program._companyManager.AddCompany("Company A", "Technology");
+            program._companyManager.AddCompany("Company B", "Finance");
+            program._companyManager.AddCompany("Company C", "Healthcare");
+            program._companyManager.AddCompany("Company D", "Manufacturing");
 
         }
 
