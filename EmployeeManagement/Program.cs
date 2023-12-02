@@ -33,9 +33,11 @@ namespace EmployeeManagement
 
             program._employeeAccess.DropTable();
             program._companyManager.DropCompanyTable();
+            program._projectManager.DropTable();
 
             program._companyManager.InitializeDatabase();
             program._employeeAccess.InitializeDatabase();
+            program._projectManager.InitializeDatabase();
 
             InitialDataset(program);
 
@@ -90,12 +92,17 @@ namespace EmployeeManagement
             program._employeeAccess.AddEmployee("Emily Brown", "Marketing Department", random.Next(20, 101));
             program._employeeAccess.AddEmployee("Robert Williams", "Operations Department", random.Next(20, 101));
             program._employeeAccess.AddEmployee("Sophia Miller", "Sales Department", random.Next(20, 101));
-            Console.WriteLine("\n");
+            Console.Write("\n");
 
             program._companyManager.AddCompany("Company A", "Technology");
             program._companyManager.AddCompany("Company B", "Finance");
             program._companyManager.AddCompany("Company C", "Healthcare");
             program._companyManager.AddCompany("Company D", "Manufacturing");
+            Console.Write("\n");
+
+            program._projectManager.AssignEmployeeToCompany(1, 1);
+
+
         }
     }
 
