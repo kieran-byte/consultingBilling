@@ -20,7 +20,7 @@ namespace EmployeeManagement.employee
 
 
                 //create employee table
-                string createTableQuery = "CREATE TABLE IF NOT EXISTS Employees (EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Department TEXT, Hourly INT)";
+                string createTableQuery = "CREATE TABLE IF NOT EXISTS Employees (EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Department TEXT, Hourly INT, CompanyId INT)";
                 SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
                 command.ExecuteNonQuery();
 
