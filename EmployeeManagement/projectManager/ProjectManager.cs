@@ -23,8 +23,8 @@ namespace EmployeeManagement.projectManager
 
                 //junction table showing which employee works on which project
                 string createTableQuery = @"CREATE TABLE IF NOT EXISTS EmployeeProjects
-                        (EmployeeId INTEGER,ProjectId INTEGER,FOREIGN KEY(EmployeeId) REFERENCES Employees(EmployeeId),
-                        FOREIGN KEY(ProjectId) REFERENCES Projects(ProjectId)
+                        (EmployeeId INTEGER,CompanyId INTEGER,FOREIGN KEY(EmployeeId) REFERENCES Employees(EmployeeId),
+                        FOREIGN KEY(CompanyId) REFERENCES Companies(CompanyId)
                             )";
                 SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
                 command.ExecuteNonQuery();
@@ -40,13 +40,27 @@ namespace EmployeeManagement.projectManager
             {
                 connection.Open();
 
-                string updateQuery = "UPDATE Employee SET CompanyId = @CompanyId WHERE EmployeeId = @EmployeeId";
+                string updateQuery = "UPDATE Employees SET CompanyId = @CompanyId WHERE EmployeeId = @EmployeeId";
                 using (SQLiteCommand command = new SQLiteCommand(updateQuery, connection))
                 {
                     command.Parameters.AddWithValue("@CompanyId", companyId);
                     command.Parameters.AddWithValue("@EmployeeId", employeeId);
                     command.ExecuteNonQuery();
+
+
                 }
+
+                string insertQuery = "INSERT INTO EmployeeProjects (EmployeeId, CompanyId) VALUES (@EmployeeId, @CompanyId)";
+                using (SQLiteCommand command = new SQLiteCommand(insertQuery, connection))
+                {
+
+                    command.Parameters.AddWithValue("@EmployeeId", employeeId);
+                    command.Parameters.AddWithValue("@CompanyId", companyId);
+                    command.ExecuteNonQuery();
+                }
+
+
+
             }
         }
 
